@@ -1,0 +1,516 @@
+﻿@model Quantrix_Git.Models.Page
+@{
+    
+    Layout = "~/Views/Shared/_admin_layout.cshtml";
+}
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>*@
+    <div class="row justify-content-between align-items-center mb-3  fadeIn">
+        <div class="col-md-auto">
+            <h2>Banner Management</h2>
+        </div>
+        @Html.Hidden("hdnPageId","0")
+        @Html.Hidden("hdnBannerId", "0")
+        <div class="table-box main-form fadeInRight" style="height:100% !important">
+
+            <div class="table-box animated fadeInRight" id="dvPageList" style="height:100% !important">
+                <div class="mCustomScrollbar content fluid light" data-mcs-theme="inset-2-dark">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table-responsive-sm" id="BindData">
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>Page Name</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbdSearchResult">
+                            @{ foreach (var item in Model.PageList)
+                             {
+                                <tr>
+                                    <td>
+                                        <a href="#" id="aedit" class="pr-3" data-page_id="@item.page_id" data-name="@item.name"><i class="fa fa-edit" aria-hidden="true" title="Edit"></i></a>
+
+                                    </td>
+
+                                    <td>@item.name</td>
+                                </tr>
+                             }
+                            }
+
+                        </tbody>
+                        @*<tfoot id="divNoMore" style="display:none">
+                        <tr>
+                            <td colspan="2">No Data Found</td>
+                        </tr>
+                    </tfoot>*@
+                    </table>
+                </div>
+            </div>
+           
+            <div class="table-box animated fadeInRight" id="divBanner"  style="height: 100% !important; display: none">
+                <div class="mCustomScrollbar content fluid light" data-mcs-theme="inset-2-dark">
+                   
+                   
+                        
+                        <div class="form_golf">
+                            <form id="frmPropertyImages" name="frmPropertyImages" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-11">
+
+                                    </div>
+                                    <div class="col-md-1">
+                                        <a href="#" id="aCloseBannerDiv"><i class="fa">Close</i></a>
+                                    </div>
+                                </div>
+
+
+                                <div class="form_golf">
+                                    <div class="row">
+
+                                        <div class="col-md-8">
+
+                                            @Html.TextBox("txtPageName", "", new { @class = "form-control", @placeholder = "Page Name", @maxlength = "10", @tabindex = "1",@readonly=true })
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <br />
+                                Select Banner Image
+                                <div class="form_golf">
+                                    <div class="row">
+                                        <div style="margin-left:17px"> <img id="user_img" height="300" width="500" style="border:solid" /> </div>
+                                        <div class="col-md-4">
+                                            <input type="file" title="search image" id="file" name="file" onchange="show(this)" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <br />
+                                Header Text
+                                <div class="form_golf">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            @Html.TextArea("txtheaderText", "", new { @class = "form-control", @placeholder = "Enter Header Text", @maxlength="500" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <br />
+
+                                Subtext
+                                <div class="form_golf">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            @Html.TextArea("txtsubText", "", new { @class = "form-control", @placeholder = "Enter Subtext", @maxlength = "500" })
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button type="button" id="btnSave" class="btn btn-primary">Save</button>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button type="button" id="btnCancel" class="btn btn-secondary">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                        </div>
+                       <br/><br />
+                    <div >
+                        @*<div class="mCustomScrollbar content fluid light" data-mcs-theme="inset-2-dark">*@
+
+                            <div class="form_golf">
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                    </div>
+
+                                    <div class="col-md-2" style="font-size:14px !important">
+                                        Active @Html.RadioButton("rdoStatus", "1", true, new { @id = "rdoActive" })
+                                        Deactive @Html.RadioButton("rdoStatus", "0", new { @id = "rdoDeActive" })
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        @Html.TextBox("txtsearch", "", new { @class = "form-control", @placeholder = "Search", @maxlength = "100", })
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table-responsive-sm" id="BindData">
+                                <thead>
+                                    <tr>
+                                        <th style="width:10%">Action</th>
+                                        <th style="width:10%">Banner</th>
+                                        <th style="width:50%">Header Text</th>
+                                        <th style="width:30%">Subtext</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="tbdSearchResultBanner">
+                                    
+
+                                </tbody>
+                                <tfoot id="divNoMore" style="display:none">
+                                    <tr>
+                                        <td colspan="4">No Data Found</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        @*</div>*@
+                    </div>
+                </div>
+            </div>
+                  
+                </div>
+            </div>
+            <script type="text/javascript">
+    $(document).ready(function () {
+        $(document).off("click", "#aedit").on("click", "#aedit", function () {
+            edit($(this).data("page_id"), $(this).data("name"));
+        });
+
+        $(document).off("click", "#aCloseBannerDiv").on("click", "#aCloseBannerDiv", function () {
+            $("#hdnPageId").val(0);
+            $("#hdnBannerId").val(0);
+            $("#dvPageList").show();
+            $("#divBanner").hide();
+            $("#txtPageName").val("");
+        });
+
+        $(document).off("click", "#btnCancel").on("click", "#btnCancel", function () {
+            clearAll();
+        });
+
+        $(document).off("click", "#btnSave").on("click", "#btnSave", function () {
+            if ($("#txtheaderText").val() == "") {
+                alert("Enter Header Text");
+                $("#txtheaderText").focus();
+                return false;
+            }
+            if ($("#txtsubText").val() == "") {
+                alert("Enter Sub Text");
+                $("#txtsubText").focus();
+                return false;
+            }
+            else { save(); }
+
+        });
+
+        $('#txtsearch').on('change input', function () {
+            var Length = $("#txtsearch").val().length;
+
+            if (Length > 2) {
+                searchBanner();
+            }
+            else if (Length == 0) { searchBanner(); }
+        });
+        $(document).off("click", "#rdoActive").on("click", "#rdoActive", function () {
+            $("#rdoActive").val(1);
+            $("#rdoDeActive").val(0);
+            searchBanner();
+        });
+        $(document).off("click", "#rdoDeActive").on("click", "#rdoDeActive", function () {
+            $("#rdoActive").val(0);
+            $("#rdoDeActive").val(1);
+            searchBanner();
+        });
+
+        $(document).off("click", "#aDeactive").on("click", "#aDeactive", function () {
+            if (confirm('Are you sure to Deactivate?')) { changeStatus($(this).data("banner_id"), 0); }
+            else { return false; }
+
+        });
+
+        $(document).off("click", "#aactive").on("click", "#aactive", function () {
+            if (confirm('Are you sure to Activate?')) { changeStatus($(this).data("banner_id"), 1); }
+            else { return false; }
+
+        });
+        $(document).off("click", "#aeditBanner").on("click", "#aeditBanner", function () {
+            editBanner($(this).data("banner_id"), 1); 
+           
+        });
+
+                    //$(document).off("change", "#SelectedPage").on("change", "#SelectedPage", function () {
+                    //    if ($('#SelectedPage').val() != null && $('#SelectedPage').val() != "") {
+                    //        $.ajax({
+                    //            url: '/Admin/GetPageDetails',
+                    //            type: 'GET',
+                    //            data: { page_id: $('#SelectedPage').val() },
+                    //            success: function (result) {
+                    //                debugger;
+                    //                console.log(result.PageList[0]);
+                    //                $('#txtheaderText').val(result.PageList[0].headertext);
+                    //                $('#txtsubText1').val(result.PageList[0].subtext1);
+                    //                $('#txtsubText2').val(result.PageList[0].subtext2);
+                    //                $('#txtsubText3').val(result.PageList[0].subtext3);
+                    //                $('#txtsubText4').val(result.PageList[0].subtext4);
+                    //                if (result.PageList[0].image_url != null && result.PageList[0].image_url != "") {
+                    //                    var filerdr = new FileReader();
+                    //                    //filerdr.onload = function (e) {
+                    //                    $('#user_img').attr('src', '/images/' + result.PageList[0].image_url);
+                    //                    //}
+                    //                    filerdr.readAsDataURL('/images/' + result.PageList[0].image_url);
+                    //                }
+                    //                else {
+                    //                    $('#file').val('');
+                    //                    $('#user_img').attr('src', '/images/notavailable.png');
+
+                    //                    return false;
+                    //                }
+
+                    //            },
+                    //            error: function (errorrslt) {
+
+                    //                console.log(errorrslt);
+                    //                alert('Internal error has been occured.Please contact development team...!');
+                    //                return false;
+                    //            }
+                    //        });
+                    //    }
+                    //    else {
+                    //        $('#file').val('');
+                    //        $('#user_img').attr('src', '/images/notavailable.png');
+
+                    //        return false;
+                    //    }
+
+
+
+                    //});
+
+                    //$(document).off("click", "#aeditPage").on("click", "#aeditPage", function () {
+                    //    //alert($(this).data("page_id"));
+                    //    $.ajax({
+                    //        url: '/Admin/GetPageDetails',
+                    //        type: 'GET',
+                    //        data: { page_id:$(this).data("page_id")  },
+                    //        success: function (result) {
+                    //            debugger;
+                    //            console.log(result.PageList[0]);
+                    //            $('#SelectedPage').val(result.PageList[0].page_id)
+                    //            $('#txtheaderText').val(result.PageList[0].headertext);
+                    //            $('#txtsubText1').val(result.PageList[0].subtext1);
+                    //            $('#txtsubText2').val(result.PageList[0].subtext2);
+                    //            $('#txtsubText3').val(result.PageList[0].subtext3);
+                    //            $('#txtsubText4').val(result.PageList[0].subtext4);
+                    //            if (result.PageList[0].image_url != null && result.PageList[0].image_url != "") {
+                    //                var filerdr = new FileReader();
+                    //                //filerdr.onload = function (e) {
+                    //                $('#user_img').attr('src', ('/images/' + result.PageList[0].image_url));
+                    //                //}
+                    //                //filerdr.readAsDataURL(('~/images/' + result.PageList[0].image_url));
+                    //            }
+                    //            else {
+                    //                $('#file').val('');
+                    //                $('#user_img').attr('src', '/images/notavailable.png');
+
+                    //                return false;
+                    //            }
+
+                    //        },
+                    //        error: function (errorrslt) {
+
+                    //            console.log(errorrslt);
+                    //            alert('Internal error has been occured.Please contact development team...!');
+                    //            return false;
+                    //        }
+                    //    });
+                    //});
+
+
+                });
+   function edit(_page_id, _name) {
+                    debugger;
+        $("#hdnPageId").val(_page_id);
+        $("#hdnBannerId").val(0);
+        $("#dvPageList").hide();
+        $("#divBanner").show();
+        $("#txtPageName").val(_name);
+        $('#user_img').attr('src', '/images/notavailable.png');
+        $("#tbdSearchResultBanner").html('');
+        GetBanners();
+    }
+    function GetBanners() {
+                    
+        $.ajax({
+            url: '/Admin/GetBanners',
+            type: 'POST',
+            data: { page_id: $("#hdnPageId").val(),banner_id:null, searchText: '', status: 1 },
+            dataType: 'json',
+            success: function (data) {
+                debugger;
+                if (data.success == true) {
+                    if (data.recordHTML == null) {
+                        $("#tbdSearchResultBanner").html('');
+                        $("#divNoMore").show();
+                    } else if (data.recordHTML == '') {
+                        $("#tbdSearchResultBanner").html('');
+                        $("#divNoMore").show();
+                    } else {
+                        $("#tbdSearchResultBanner").html(data.recordHTML);
+                        $('#divNoMore').hide();
+                    }
+                } else {
+                    alert('Internal error has been occured.Please contact development team');
+                    return false;
+                }
+            },
+            error: function (errorrslt) {
+                console.log(errorrslt);
+                alert('Internal error has been occured.Please contact development team');
+                return false;
+            }
+        });
+    }
+    function searchBanner() {
+        $.ajax({
+            url: '/Admin/GetBanners',
+            type: 'POST',
+            data: { page_id: $("#hdnPageId").val(), banner_id: null, searchText: $('#txtsearch').val(), status: $("#rdoActive").val() },
+            dataType: 'json',
+            success: function (data) {
+                debugger;
+                if (data.success == true) {
+                    if (data.recordHTML == null) {
+                        $("#tbdSearchResultBanner").html('');
+                        $("#divNoMore").show();
+                    } else if (data.recordHTML == '') {
+                        $("#tbdSearchResultBanner").html('');
+                        $("#divNoMore").show();
+                    } else {
+                        $("#tbdSearchResultBanner").html(data.recordHTML);
+                        $('#divNoMore').hide();
+                    }
+                } else {
+                    alert('Internal error has been occured.Please contact development team');
+                    return false;
+                }
+            },
+            error: function (errorrslt) {
+                console.log(errorrslt);
+                alert('Internal error has been occured.Please contact development team');
+                return false;
+            }
+        });
+    }
+    function show(input) {
+        var fileName = $('input[type=file]').val().split('\\').pop();
+        var fileNameExt = fileName.substr(fileName.lastIndexOf('.') + 1);
+        if (fileNameExt == 'png' || fileNameExt == 'jpeg' || fileNameExt == 'jpg' || fileNameExt == 'PNG' || fileNameExt == 'JPEG' || fileNameExt == 'JPG') {
+
+            if (input.files && input.files[0]) {
+                var filerdr = new FileReader();
+                filerdr.onload = function (e) {
+                    $('#user_img').attr('src', e.target.result);
+                }
+                filerdr.readAsDataURL(input.files[0]);
+            }
+        }
+        else {
+            $('#file').val('');
+            $('#user_img').attr('src','/images/notavailable.png');
+            alert('Please select .png/.jpg/.jpeg file...!');
+            return false;
+        }
+
+    }
+    function clearAll() {
+        $('#hdnBannerId').val('0');
+        $('#txtheaderText').val('');
+        $('#txtsubText').val('');
+        $('#file').val('');
+        $('#user_img').attr('src', '/images/notavailable.png');
+    }
+    function save() {
+
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('file');
+        //Iterating through each files selected in fileInput
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+        }
+        //Adding one more key to FormData object
+        formdata.append('page_id', $('#hdnPageId').val());
+        formdata.append('banner_id', $('#hdnBannerId').val());
+        formdata.append('header_text', $('#txtheaderText').val());
+        formdata.append('sub_text', $('#txtsubText').val());
+        $.ajax({
+            url: '/Admin/SavePageDetails',
+            type: 'POST',
+            data: formdata,
+            //mimeType: 'multipart/form-data',
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                if (result.success == true) {
+                    alert("Record Saved successfully...!");
+                    clearAll();
+                    GetBanners();
+                }
+            },
+            error: function (errorrslt) {
+                console.log(errorrslt);
+                alert('Internal error has been occured.Please contact development team...!');
+                return false;
+            }
+        });
+    }
+    function editBanner(_banner_id) {
+        $.ajax({
+            url: '/Admin/GetBanners',
+            type: 'POST',
+            data: { page_id: $("#hdnPageId").val(), banner_id: _banner_id, searchText: '', status: 1 },
+            dataType: 'json',
+            success: function (data) {
+                debugger;
+                if (data.success == true) {
+                    $('#hdnBannerId').val(data.Records[0].banner_id);
+                    if (data.Records[0].image_url != null && data.Records[0].image_url != "")
+                        $('#user_img').attr('src', '/images/' + data.Records[0].image_url);
+                    else
+                        $('#user_img').attr('src', '/images/notavailable.png');
+                    $('#txtheaderText').val(data.Records[0].headertext);
+                    $('#txtsubText').val(data.Records[0].subtext);
+                } else {
+                    alert('Internal error has been occured.Please contact development team');
+                    return false;
+                }
+            },
+            error: function (errorrslt) {
+                console.log(errorrslt);
+                alert('Internal error has been occured.Please contact development team');
+                return false;
+            }
+        });
+    }
+    function changeStatus(_banner_id, _status) {
+
+        $.ajax({
+            url: '/Admin/ChangeBannerStatus',
+            type: 'POST',
+            data: { banner_id: _banner_id, status: _status },
+            success: function (result) {
+
+                if (result.success == true) {
+                    if (_status == 0)
+                    { alert('Record Deactivated Successfully'); }
+
+                    else { alert('Record Activated Successfully'); }
+                    searchBanner();
+                }
+                else {
+                    alert(result.message);
+                    return false;
+                }
+            },
+            error: function (errorrslt) {
+
+                console.log(errorrslt);
+                alert('Internal error has been occured.Please contact development team');
+                return false;
+            }
+        });
+    }
+ </script>
+

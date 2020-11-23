@@ -1,0 +1,403 @@
+﻿@model Quantrix_Git.Models.AboutUs
+@{
+
+    Layout = "~/Views/Shared/_admin_layout.cshtml";
+}
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>*@
+<div class="row justify-content-between align-items-center mb-3  fadeIn">
+    <div class="col-md-auto">
+        <h2>About Us</h2>
+    </div>
+    @Html.Hidden("hdnAboutUsSectionId", "0")
+    @Html.Hidden("hdnAboutUsDetailsId", "0")
+    <div class="table-box main-form fadeInRight" style="height:100% !important">
+
+        <div class="table-box animated fadeInRight" id="dvPageList" style="height:100% !important">
+            <div class="mCustomScrollbar content fluid light" data-mcs-theme="inset-2-dark">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table-responsive-sm" id="BindData">
+                    <thead>
+                        <tr>
+                            <th>Action</th>
+                            <th>Section Name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbdSearchResult">
+                        @{ foreach (var item in Model.SectionList)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="#" id="aedit" class="pr-3" data-section_id="@item.section_id" data-section_name="@item.section_name"><i class="fa fa-edit" aria-hidden="true" title="Edit"></i></a>
+
+                                    </td>
+
+                                    <td>@item.section_name</td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                    @*<tfoot id="divNoMore" style="display:none">
+                            <tr>
+                                <td colspan="2">No Data Found</td>
+                            </tr>
+                        </tfoot>*@
+                </table>
+            </div>
+        </div>
+
+        <div class="table-box animated fadeInRight" id="divBanner" style="height: 100% !important; display: none">
+            <div class="mCustomScrollbar content fluid light" data-mcs-theme="inset-2-dark">
+                <div class="form_golf">
+                    <form id="frmPropertyImages" name="frmPropertyImages" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-11">
+
+                            </div>
+                            <div class="col-md-1">
+                                <a href="#" id="aCloseBannerDiv"><i class="fa">Close</i></a>
+                            </div>
+                        </div>
+                        <div class="form_golf">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    @Html.TextBox("txtSectionName", "", new { @class = "form-control", @placeholder = "Section Name", @maxlength = "10", @tabindex = "1", @readonly = true })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                       
+                            Section Image
+                            <div class="form_golf">
+                                <div class="row">
+                                    <div style="margin-left:17px"> <img id="user_img" height="300" width="500" style="border:solid" /> </div>
+                                    <div class="col-md-4">
+                                        <input type="file" title="search image" id="file" name="file" onchange="show(this)" />
+                                    </div>
+                                </div>
+                            </div>
+                       
+                        <br />
+                        Section Notes
+                        <div class="form_golf">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    @Html.TextArea("txtSectionNotes", "", new { @class = "form-control", @placeholder = "Enter Section Notes"})
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" id="btnSave" class="btn btn-primary">Save</button>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" id="btnCancel" class="btn btn-secondary">Cancel</button>
+                                </div>
+                            </div>
+                        </div>                        
+                    </form>
+                </div>
+                <br /><br />
+                <div>
+                    @*<div class="mCustomScrollbar content fluid light" data-mcs-theme="inset-2-dark">*@
+
+                    <div class="form_golf">
+                        <div class="row">
+                            <div class="col-md-6">
+                            </div>
+                            <div class="col-md-2" style="font-size:14px !important">
+                                Active @Html.RadioButton("rdoStatus", "1", true, new { @id = "rdoActive" })
+                                Deactive @Html.RadioButton("rdoStatus", "0", new { @id = "rdoDeActive" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBox("txtsearch", "", new { @class = "form-control", @placeholder = "Search", @maxlength = "100", })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table-responsive-sm" id="BindData">
+                        <thead>
+                            <tr>
+                                <th style="width:20%">Action</th>
+                                <th style="width:30%" id="thImage">Section Image</th>
+                                <th style="width:50%">Section Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbdSearchResultBanner">
+                        </tbody>
+                        <tfoot id="divNoMore" style="display:none">
+                            <tr>
+                                <td colspan="3">No Data Found</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).off("click", "#aedit").on("click", "#aedit", function () {
+            debugger;
+            if ($(this).data("section_id") == "2") {
+                $("#file").hide();
+               
+            }
+            else {
+              $("#file").show();              
+                        
+            }
+            edit($(this).data("section_id"), $(this).data("section_name"));
+        });
+
+        $(document).off("click", "#aCloseBannerDiv").on("click", "#aCloseBannerDiv", function () {
+            $("#hdnAboutUsSectionId").val(0);
+            $("#hdnAboutUsDetailsId").val(0);
+            $("#dvPageList").show();
+            $("#divBanner").hide();
+            $("#txtSectionName").val("");
+        });
+
+        $(document).off("click", "#btnCancel").on("click", "#btnCancel", function () {
+            clearAll();
+        });
+
+        $(document).off("click", "#btnSave").on("click", "#btnSave", function () {
+            if ($("#txtSectionNotes").val() == "") {
+                alert("Enter Section Notes");
+                $("#txtSectionNotes").focus();
+                return false;
+            }
+            else { save(); }
+
+        });
+
+        $('#txtsearch').on('change input', function () {
+            var Length = $("#txtsearch").val().length;
+
+            if (Length > 2) {
+                searchBanner();
+            }
+            else if (Length == 0) { searchBanner(); }
+        });
+        $(document).off("click", "#rdoActive").on("click", "#rdoActive", function () {
+            $("#rdoActive").val(1);
+            $("#rdoDeActive").val(0);
+            searchBanner();
+        });
+        $(document).off("click", "#rdoDeActive").on("click", "#rdoDeActive", function () {
+            $("#rdoActive").val(0);
+            $("#rdoDeActive").val(1);
+            searchBanner();
+        });
+
+        $(document).off("click", "#aDeactive").on("click", "#aDeactive", function () {
+            if (confirm('Are you sure to Deactivate?')) { changeStatus($(this).data("section_details_id"), 0); }
+            else { return false; }
+
+        });
+
+        $(document).off("click", "#aactive").on("click", "#aactive", function () {
+            if (confirm('Are you sure to Activate?')) { changeStatus($(this).data("section_details_id"), 1); }
+            else { return false; }
+
+        });
+        $(document).off("click", "#aeditBanner").on("click", "#aeditBanner", function () {
+            
+            editBanner($(this).data("section_details_id"), 1);
+
+        });
+
+    });
+    function edit(_section_id, _section_name) {
+        debugger;
+        $("#hdnAboutUsSectionId").val(_section_id);
+        $("#hdnAboutUsDetailsId").val(0);
+        $("#dvPageList").hide();
+        $("#divBanner").show();
+        $("#txtSectionName").val(_section_name);
+        $('#user_img').attr('src', '/images/notavailable.png');
+        $("#tbdSearchResultBanner").html('');
+        GetBanners();
+    }
+    function GetBanners() {
+
+        $.ajax({
+            url: '/AboutUs/Get',
+            type: 'POST',
+            data: { section_id: $("#hdnAboutUsSectionId").val(), section_details_id: null, searchText: '', status: 1 },
+            dataType: 'json',
+            success: function (data) {
+                debugger;
+                if (data.success == true) {
+                    if (data.recordHTML == null) {
+                        $("#tbdSearchResultBanner").html('');
+                        $("#divNoMore").show();
+                    } else if (data.recordHTML == '') {
+                        $("#tbdSearchResultBanner").html('');
+                        $("#divNoMore").show();
+                    } else {
+                        $("#tbdSearchResultBanner").html(data.recordHTML);
+                        $('#divNoMore').hide();
+                    }
+                } else {
+                    alert('Internal error has been occured.Please contact development team');
+                    return false;
+                }
+            },
+            error: function (errorrslt) {
+                console.log(errorrslt);
+                alert('Internal error has been occured.Please contact development team');
+                return false;
+            }
+        });
+    }
+    function searchBanner() {
+        $.ajax({
+            url: '/AboutUs/Get',
+            type: 'POST',
+            data: { section_id: $("#hdnAboutUsSectionId").val(), section_details_id: null, searchText: $('#txtsearch').val(), status: $("#rdoActive").val() },
+            dataType: 'json',
+            success: function (data) {
+                debugger;
+                if (data.success == true) {
+                    if (data.recordHTML == null) {
+                        $("#tbdSearchResultBanner").html('');
+                        $("#divNoMore").show();
+                    } else if (data.recordHTML == '') {
+                        $("#tbdSearchResultBanner").html('');
+                        $("#divNoMore").show();
+                    } else {
+                        $("#tbdSearchResultBanner").html(data.recordHTML);
+                        $('#divNoMore').hide();
+                    }
+                } else {
+                    alert('Internal error has been occured.Please contact development team');
+                    return false;
+                }
+            },
+            error: function (errorrslt) {
+                console.log(errorrslt);
+                alert('Internal error has been occured.Please contact development team');
+                return false;
+            }
+        });
+    }
+    function show(input) {
+        var fileName = $('input[type=file]').val().split('\\').pop();
+        var fileNameExt = fileName.substr(fileName.lastIndexOf('.') + 1);
+        if (fileNameExt == 'png' || fileNameExt == 'jpeg' || fileNameExt == 'jpg' || fileNameExt == 'PNG' || fileNameExt == 'JPEG' || fileNameExt == 'JPG') {
+
+            if (input.files && input.files[0]) {
+                var filerdr = new FileReader();
+                filerdr.onload = function (e) {
+                    $('#user_img').attr('src', e.target.result);
+                }
+                filerdr.readAsDataURL(input.files[0]);
+            }
+        }
+        else {
+            $('#file').val('');
+            $('#user_img').attr('src', '/images/notavailable.png');
+            alert('Please select .png/.jpg/.jpeg file...!');
+            return false;
+        }
+
+    }
+    function clearAll() {
+        $('#hdnAboutUsDetailsId').val('0');
+        $('#txtSectionNotes').val('');
+        $('#file').val('');
+        $('#user_img').attr('src', '/images/notavailable.png');
+    }
+    function save() {
+        debugger;
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('file');
+        //Iterating through each files selected in fileInput
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+        }
+        //Adding one more key to FormData object
+        formdata.append('section_id', $('#hdnAboutUsSectionId').val());
+        formdata.append('section_details_id', $('#hdnAboutUsDetailsId').val());
+        formdata.append('section_notes', $('#txtSectionNotes').val());
+        $.ajax({
+            url: '/AboutUs/Save',
+            type: 'POST',
+            data: formdata,
+            //mimeType: 'multipart/form-data',
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                if (result.success == true) {
+                    alert("Record Saved successfully...!");
+                    clearAll();
+                    GetBanners();
+                }
+            },
+            error: function (errorrslt) {
+                console.log(errorrslt);
+                alert('Internal error has been occured.Please contact development team...!');
+                return false;
+            }
+        });
+    }
+    function editBanner(_section_details_id) {
+        $.ajax({
+            url: '/AboutUs/Get',
+            type: 'POST',
+            data: { section_id: $("#hdnAboutUsSectionId").val(), section_details_id: _section_details_id, searchText: '', status: 1 },
+            dataType: 'json',
+            success: function (data) {
+                debugger;
+                if (data.success == true) {
+                    $('#hdnAboutUsDetailsId').val(data.Records[0].section_details_id);
+                    if (data.Records[0].image_url != null && data.Records[0].image_url != "")
+                        $('#user_img').attr('src', '/images/' + data.Records[0].image_url);
+                    else
+                        $('#user_img').attr('src', '/images/notavailable.png');
+                    $('#txtSectionNotes').val(data.Records[0].section_notes);
+                    
+                } else {
+                    alert('Internal error has been occured.Please contact development team');
+                    return false;
+                }
+            },
+            error: function (errorrslt) {
+                console.log(errorrslt);
+                alert('Internal error has been occured.Please contact development team');
+                return false;
+            }
+        });
+    }
+    function changeStatus(_section_details_id, _status) {
+
+        $.ajax({
+            url: '/AboutUs/ChangeStatus',
+            type: 'POST',
+            data: { section_details_id: _section_details_id, status: _status },
+            success: function (result) {
+
+                if (result.success == true) {
+                    if (_status == 0) { alert('Record Deactivated Successfully'); }
+
+                    else { alert('Record Activated Successfully'); }
+                    searchBanner();
+                }
+                else {
+                    alert(result.message);
+                    return false;
+                }
+            },
+            error: function (errorrslt) {
+
+                console.log(errorrslt);
+                alert('Internal error has been occured.Please contact development team');
+                return false;
+            }
+        });
+    }
+</script>
+

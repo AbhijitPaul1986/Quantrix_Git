@@ -1,0 +1,322 @@
+﻿@model Quantrix_Git.Models.HomePageFooter
+@{
+
+    Layout = "~/Views/Shared/_admin_layout.cshtml";
+}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<div class="row justify-content-between align-items-center mb-3  fadeIn">
+    <div class="col-md-auto">
+        <h2>Home Page Testimonial Management</h2>
+    </div>
+    @Html.Hidden("hdnAddressID", "0")
+    <div class="table-box main-form  fadeInRight" style="height:100% !important">
+
+        <div>
+            Testimonial Heading
+            <div class="form_golf">
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.TextArea("txtFooterText", "", new { @class = "form-control", @placeholder = "Enter Testimonial Heading", @maxlength = "500", @tabindex = "1" })
+                    </div>
+                </div>
+            </div>
+            <br />
+            Testimonial Content
+            <div class="form_golf">
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.TextArea("txtfooterSubText", "", new { @class = "form-control", @placeholder = "Enter Testimonial Content", @maxlength = "500", @tabindex = "2" })
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            Client Name
+            <div class="form_golf">
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.TextBox("txtClientName", "", new { @class = "form-control", @placeholder = "Enter Client Name", @maxlength = "100", @tabindex = "4" })
+                    </div>
+                </div>
+            </div>
+            <br />
+            Designation
+            <div class="form_golf">
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.TextBox("txtCopyWriter", "", new { @class = "form-control", @placeholder = "Enter Designation", @maxlength = "100", @tabindex = "4" })
+                    </div>
+                    <div class="col-md-4" style="margin-top:-15px">
+                        <button type="button" id="btnSave" class="btn btn-primary" tabindex="5">Save</button>
+                        <button type="button" id="btnCancel" class="btn btn-secondary" tabindex="6">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br />
+        <div class="table-box animated fadeInRight">
+            <div class="mCustomScrollbar content fluid light" data-mcs-theme="inset-2-dark">
+
+                <div class="form_golf">
+                    <div class="row">
+                        <div class="col-md-6">
+
+                        </div>
+
+                        <div class="col-md-2" style="font-size:14px !important">
+                            Active @Html.RadioButton("rdoStatus", "1", true, new { @id = "rdoActive" })
+                            Deactive @Html.RadioButton("rdoStatus", "0", new { @id = "rdoDeActive" })
+                        </div>
+
+                        <div class="col-md-4">
+                            @Html.TextBox("txtsearch", "", new { @class = "form-control", @placeholder = "Search", @maxlength = "100", })
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table-responsive-sm" id="BindData">
+                    <thead>
+                        <tr>
+                            <th style="width:10%">Action</th>
+                            <th style="width:20%">Testimonial Heading</th>
+                            <th style="width:50%">Testimonial Content</th>
+                            <th style="width:10%">Client Name</th>
+                            <th style="width:10%">Designation</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbdSearchResult">
+                        @{ foreach (var item in Model.HomePageFooterList)
+                         {
+                                                <tr>
+                                                    <td>
+                                                        <a href="#" id="aedit" class="pr-3" data-home_page_footer_id="@item.home_page_footer_id"><i class="fa fa-edit" aria-hidden="true" title="Edit"></i></a>
+                                                        @if (@item.isactive == 0)
+                                                        {
+                                                            <a href="#" class="pr-3" data-home_page_footer_id="@item.home_page_footer_id" id="aactive"><i class="fa fa-flash" aria-hidden="true" title="Activate"></i></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="#" class="pr-3" data-home_page_footer_id="@item.home_page_footer_id" id="aDeactive"><i class="fa fa-flash" aria-hidden="true" title="Deactivate"></i></a>
+                                                        }
+
+
+                                                    </td>
+
+                                                    <td>@item.footer_text</td>
+                                                    <td>@item.footer_sub_text</td>
+                                                    <td>@item.client_name</td>
+                                                    <td>@item.copywriter</td>
+
+                                                </tr>
+                         }
+                        }
+
+                    </tbody>
+                    <tfoot id="divNoMore" style="display:none">
+                        <tr>
+                            <td colspan="5">No Data Found</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $('#txtsearch').on('change input', function () {
+            var Length = $("#txtsearch").val().length;
+
+            if (Length > 2) {
+                search();
+            }
+            else if (Length == 0) { search(); }
+        });
+        $(document).off("click", "#rdoActive").on("click", "#rdoActive", function () {
+            $("#rdoActive").val(1);
+            $("#rdoDeActive").val(0);
+            search();
+        });
+        $(document).off("click", "#rdoDeActive").on("click", "#rdoDeActive", function () {
+            $("#rdoActive").val(0);
+            $("#rdoDeActive").val(1);
+            search();
+        });
+        $(document).off("click", "#aedit").on("click", "#aedit", function () {
+            edit($(this).data("home_page_footer_id"));
+        });
+        $(document).off("click", "#aDeactive").on("click", "#aDeactive", function () {
+            if (confirm('Are you sure to Deactivate?')) { changeStatus($(this).data("home_page_footer_id"), 0); }
+            else { return false; }
+
+        });
+
+        $(document).off("click", "#aactive").on("click", "#aactive", function () {
+            if (confirm('Are you sure to Activate?')) { changeStatus($(this).data("home_page_footer_id"), 1); }
+            else { return false; }
+
+        });
+    });
+    $(document).off("click", "#btnSave").on("click", "#btnSave", function () {
+        if (validate()) {
+            save();
+        }
+    });
+
+    $(document).off("click", "#btnCancel").on("click", "#btnCancel", function () {
+        clearAll();
+    });
+
+    function validate() {
+        if ($("#txtFooterText").val() == "") {
+            alert("Please Enter Footer Text");
+            $("#txtFooterText").focus();
+            return false;
+        }
+        if ($("#txtfooterSubText").val() == "") {
+            alert("Please Enter Footer Sub Text");
+            $("#txtfooterSubText").focus();
+            return false;
+        }
+        if ($("#txtClientName").val() == "") {
+            alert("Please Enter Client Name");
+            $("#txtClientName").focus();
+            return false;
+        }
+        
+        if ($("#txtCopyWriter").val() == "") {
+            alert("Please Enter Copywriter");
+            $("#txtCopyWriter").focus();
+            return false;
+        }
+       
+        return true;
+    }
+
+    function clearAll() {
+        $("#hdnAddressID").val("0");
+        $("#txtFooterText").val("");
+        $("#txtfooterSubText").val("");
+        $("#txtClientName").val("");
+        $("#txtCopyWriter").val("");
+    }
+
+    
+    function save() {
+        $.ajax({
+            url: '/HomePageFooter/Save',
+            type: 'POST',
+            data: { hdnAddressID: $('#hdnAddressID').val(), footer_text: $('#txtFooterText').val(), footer_sub_text: $('#txtfooterSubText').val(),client_name: $('#txtClientName').val(), copywriter: $('#txtCopyWriter').val() },
+            success: function (result) {
+
+                if (result.success == true) {
+                    alert('Record Saved Successfully');
+                    clearAll();
+                    search();
+                }
+                else {
+                    alert(result.message);
+                    return false;
+                }
+            },
+            error: function (errorrslt) {
+
+                console.log(errorrslt);
+                alert('Internal error has been occured.Please contact development team');
+                return false;
+            }
+        });
+    }
+
+    function search() {
+
+        $.ajax({
+            url: '/HomePageFooter/Search',
+            type: 'POST',
+
+            data: { home_page_footer_id: null, searchText: $('#txtsearch').val(), status: $("#rdoActive").val() },
+            dataType: 'json',
+
+
+            success: function (data) {
+                debugger;
+                if (data.recordHTML == null) {
+                    $("#tbdSearchResult").html('');
+                    $("#divNoMore").show();
+                } else if (data.recordHTML == '') {
+                    $("#tbdSearchResult").html('');
+                    $("#divNoMore").show();
+                } else {
+                    $("#tbdSearchResult").html(data.recordHTML);
+                    $('#divNoMore').hide();
+                }
+            },
+            error: function (errorrslt) {
+
+                console.log(errorrslt);
+                alert('Internal error has been occured.Please contact development team');
+                return false;
+            }
+        });
+    }
+
+    function edit(_home_page_footer_id) {
+        $.ajax({
+            url: '/HomePageFooter/Search',
+            type: 'POST',
+            data: { home_page_footer_id: _home_page_footer_id, searchText: '', status: 1 },
+            dataType: 'json',
+            success: function (data) {
+                debugger;
+                if (data.success == true) {
+                    $('#hdnAddressID').val(data.Records[0].home_page_footer_id);
+                    $('#txtFooterText').val(data.Records[0].footer_text);
+                    $('#txtfooterSubText').val(data.Records[0].footer_sub_text);
+                    $('#txtClientName').val(data.Records[0].client_name);
+                    $('#txtCopyWriter').val(data.Records[0].copywriter);
+                } else {
+                    alert('Internal error has been occured.Please contact development team');
+                    return false;
+                }
+            },
+            error: function (errorrslt) {
+                console.log(errorrslt);
+                alert('Internal error has been occured.Please contact development team');
+                return false;
+            }
+        });
+    }
+
+    function changeStatus(_home_page_footer_id, _status) {
+
+        $.ajax({
+            url: '/HomePageFooter/ChangeStatus',
+            type: 'POST',
+            data: { home_page_footer_id: _home_page_footer_id, status: _status },
+            success: function (result) {
+
+                if (result.success == true) {
+                    if (_status == 0)
+                    { alert('Record Deactivated Successfully'); }
+
+                    else { alert('Record Activated Successfully'); }
+                    search();
+                }
+                else {
+                    alert(result.message);
+                    return false;
+                }
+            },
+            error: function (errorrslt) {
+
+                console.log(errorrslt);
+                alert('Internal error has been occured.Please contact development team');
+                return false;
+            }
+        });
+    }
+</script>
+

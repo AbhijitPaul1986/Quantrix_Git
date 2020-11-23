@@ -1,0 +1,257 @@
+﻿@model Quantrix_Git.Models.HomePage
+
+@{
+    Layout = "~/Views/Shared/_front_user_layout.cshtml";
+}
+<script src="~/Scripts/frontEnd/js/owl.carousel.min.js"></script>
+<link href="~/css/frontEnd/css/owl.carousel.min.css" rel="stylesheet" />
+<link href="~/css/frontEnd/css/owl.theme.default.min.css" rel="stylesheet" />
+@{
+    string headerText = "";
+    string subtext = "";
+    string header_img_url = "../../images/notavailable.png";
+    if (Model._page != null)
+    {
+        headerText = Convert.ToString(Model._page.headertext);
+        subtext = Convert.ToString(Model._page.subtext);
+        if (Convert.ToString(Model._page.image_url) != "")
+        {
+            header_img_url = "../../images/" + Model._page.image_url;
+        }
+    }
+}
+<section class="banner_details">
+    <div class="main_banner" style="background-image:url(@header_img_url)">
+        <div class="row m-0">
+            <div class="col-md-12">
+                <div class="banner_header">
+                    <pre class="header_pre">@headerText</pre>
+                    <h4>@subtext</h4>
+                    <div class="banner_bttn">
+                        <button class="contact_us">CONTACT US</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="company_data">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="company_main">
+                    <span class="icon-bottles"></span>
+                    <h4>Highly Custom Bottle Solution</h4>
+                    <p>Catering to your unique needs by offering custom moulds and creative bottle design. Contact us for a quote today</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company_main">
+                    <span class="icon-box"></span>
+                    <h4>Full Packaging Convenience</h4>
+                    <p>Your time is precious. Let us help you save it by preferring our bottle cap and cardboard resources for your convivence</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="company_main">
+                    <span class="icon-customer-ser"></span>
+                    <h4>Services and Accessibility</h4>
+                    <p>Keeping your products and inquiry lead times low is our priority. Contact us today to speak with our plastic and tech experts</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="quality_details">
+    <div class="quantity_header">
+        <h3>Little things make big things matter</h3>
+        <p>Every detail is essential at Quantrix. Whether you are creating a custom design or selecting a <br> stock solution, our product quality is your achievement.</p>
+    </div>
+    <div class="quantity_desc">
+        <div class="quantity_sub_desc">
+            <div class="quantity_wrapper quantity_left">
+                <div class="quantity_data">
+                    <h6>Custom Designs</h6>
+                    <p>Explore custom bottle designs for a truly <br>unique product</p>
+                </div>
+                <div class="quantity_icon">
+                    <span class="icon-bottles"></span>
+                </div>
+            </div>
+            <div class="quantity_wrapper quantity_left">
+                <div class="quantity_data">
+                    <h6>Durability</h6>
+                    <p>Various weight options to select from for <br> preferred durability</p>
+                </div>
+                <div class="quantity_icon">
+                    <span class="icon-equalizer"></span>
+                </div>
+            </div>
+            <div class="quantity_wrapper quantity_left">
+                <div class="quantity_data">
+                    <h6>Keep a lid on</h6>
+                    <p>Fasten your bottle with our stocked caps for <br> heightened security and quality</p>
+                </div>
+                <div class="quantity_icon">
+                    <span class="icon-lid"></span>
+                </div>
+            </div>
+        </div>
+        <div class="quantity_img">
+            <img src="~/images/frontEnd/images/hp_bottle_3.png" />
+        </div>
+        <div class="quantity_sub_desc">
+            <div class="quantity_wrapper">
+                <div class="quantity_icon">
+                    <span class="icon-pantone"></span>
+                </div>
+                <div class="quantity_data">
+                    <h6>Get Creative</h6>
+                    <p>Let your product speak for itself with a <br> custom colour option</p>
+                </div>
+            </div>
+            <div class="quantity_wrapper">
+                <div class="quantity_icon">
+                    <span class="icon-surface"></span>
+                </div>
+                <div class="quantity_data">
+                    <h6>Pick Your Plastic</h6>
+                    <p>Glossy finish with PET plastic, matte finish <br> with HDPE plastic</p>
+                </div>
+            </div>
+            <div class="quantity_wrapper">
+                <div class="quantity_icon">
+                    <span class="icon-box"></span>
+                </div>
+                <div class="quantity_data">
+                    <h6>Real Packaging Solutions</h6>
+                    <p>Ensure your product is ready to ship with <br> our no-fuss cardboard packaging</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="products">
+    <div class="row m-0">
+        @{ foreach (var item in Model.CategoryList)
+            {
+                string url = "../../images/notavailable.png";
+                if (Convert.ToString(item.image_url) != "")
+                {
+                    url = "../../images/" + item.image_url;
+                }
+                <div class="col-md-4 p-0">
+                    <div class="product_details" style="background-image:url(@url)">
+                        <div class="product_data">
+                            <h4>@item.category_name</h4>
+                            <pre class="pre">@item.category_notes</pre>
+                            <button class="see_more">SEE MORE</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>
+<section class="values">
+    <div class="row m-0">
+        @{ foreach (var item in Model.HomePageContentList)
+            {
+                <div class="col-md-3">
+                    <div class="value_cnt">
+                        <div class="value_icon">
+                            <span class="@item.icon"></span>
+                        </div>
+                        <div class="value_head">
+                            <h5> @item.content_name</h5>
+                        </div>
+                        <div class="value_desc">
+                            <p>
+                                @item.content_text
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>
+<section class="testimony">
+    <div class="owl-carousel owl-theme">
+        @{ foreach (var item in Model.HomePageFooterList)
+            {
+                
+                <div class="item">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="test_data">
+                                <h4>@item.footer_text</h4>
+                                <pre class="test_data_pre">@item.footer_sub_text</pre>
+                                <span class="writer_name">@item.client_name</span>
+                                <span class="role_data">@item.copywriter.ToUpper()</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+        @*<div class="item">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="test_data">
+                        <h4>What Our Customers Are Saying</h4>
+                        <p>"Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod <br> tincidunt ut laoreet dolore euismod magna laoreet dolore magna"</p>
+                        <span class="writer_name">Patricia Freeman</span>
+                        <span class="role_data">COPYWRITER</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="test_data">
+                        <h4>What Our Customers Are Saying</h4>
+                        <p>"Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod <br> tincidunt ut laoreet dolore euismod magna laoreet dolore magna"</p>
+                        <span class="writer_name">Patricia Freeman</span>
+                        <span class="role_data">COPYWRITER</span>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    </div>
+</section>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#liHome").addClass('active');
+        var model = @Html.Raw(Json.Encode(Model));
+        var address = "";
+        var email = "";
+        var phone = "";
+        if (model._contact != null) {
+            address = model._contact.address;
+            email = model._contact.email;
+            phone = model._contact.phone;
+        }
+        $(".quantrix_info").show();
+        $("#spnAddress").text(address);
+        $("#spnemail").text(email);
+        $("#spnPhone").text(phone);
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            items: 1,
+            nav: true,
+            navText: ["<span class='icon-back'></span>","<span class='icon-next'></span>"],
+            responsive: {
+              0: {
+              items: 1
+              },
+              600: {
+              items: 1
+              },
+              1000: {
+              items: 1
+              }
+            }
+          })
+    });
+</script>

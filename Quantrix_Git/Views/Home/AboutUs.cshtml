@@ -1,0 +1,146 @@
+﻿@model Quantrix_Git.Models.AboutUsPage
+@{
+    ViewBag.Title = "AboutUs";
+    Layout = "~/Views/Shared/_front_user_layout.cshtml";
+}
+
+@{
+    string headerText = "";
+    string subtext = "";
+    string header_img_url = "../../images/notavailable.png";
+    if (Model._page != null)
+    {
+        headerText = Convert.ToString(Model._page.headertext);
+        subtext = Convert.ToString(Model._page.subtext);
+        if (Convert.ToString(Model._page.image_url) != "")
+        {
+            header_img_url = "../../images/" + Model._page.image_url;
+        }
+    }
+}
+<section class="banner_details">
+    <div class="main_innerbanner" style="background-image:url(@header_img_url)">
+        <div class="row m-0 h-100">
+            <div class="col-md-5">
+                <div class="inner_banner_head ">
+                    <div class="soon_header">
+                        <h1>@headerText</h1>
+                    </div>
+                    <div class="soon_desc">
+                        <p>
+                            @subtext
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7"></div>
+        </div>
+    </div>
+</section>
+@{
+    string _section_name = "";
+    string _section_notes = "";
+    string _section_img_url = "../../images/notavailable.png";
+    if (Model.SectionList != null && Model.SectionList.Count() != 0)
+    {
+        var _model = Model.SectionList.Where(x => x.section_id == 1).FirstOrDefault();
+        if (_model != null)
+        {
+            _section_name = Convert.ToString(_model.section_name);
+            _section_notes = Convert.ToString(_model.section_notes);
+            if (Convert.ToString(_model.image_url) != "")
+            {
+                _section_img_url = "../../images/" + _model.image_url;
+            }
+        }
+
+    }
+}
+<section class="values about_company">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="about_comp_desc quantity_header">
+                <h3>@_section_name</h3>
+                <p>
+                    @_section_notes
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="about_comp_img">
+                <img src="@_section_img_url" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+@{
+    _section_name = "";
+    _section_notes = "";
+    _section_img_url = "../../images/notavailable.png";
+    if (Model.SectionList != null && Model.SectionList.Count() != 0)
+    {
+        var _model = Model.SectionList.Where(x => x.section_id == 2).FirstOrDefault();
+        if (_model != null)
+        {
+            _section_name = Convert.ToString(_model.section_name);
+            _section_notes = Convert.ToString(_model.section_notes);
+            if (Convert.ToString(_model.image_url) != "")
+            {
+                _section_img_url = "../../images/" + _model.image_url;
+            }
+        }
+
+    }
+}
+<section class="about_promise">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="quantity_header">
+                <h3>@_section_name</h3>
+                <pre class="quantity_header_pre">
+                    @_section_notes
+                </pre>
+            </div>
+        </div>
+    </div>
+</section>
+@{
+    _section_name = "";
+    _section_notes = "";
+    _section_img_url = "../../images/notavailable.png";
+    if (Model.SectionList != null && Model.SectionList.Count() != 0)
+    {
+        var _model = Model.SectionList.Where(x => x.section_id == 3).FirstOrDefault();
+        if (_model != null)
+        {
+            _section_name = Convert.ToString(_model.section_name);
+            _section_notes = Convert.ToString(_model.section_notes);
+            if (Convert.ToString(_model.image_url) != "")
+            {
+                _section_img_url = "../../images/" + _model.image_url;
+            }
+        }
+
+    }
+}
+<section class="company_team">
+    <div class="row m-0">
+        <div class="col-md-12">
+            <div class="quantity_header">
+                <h3>@_section_name</h3>
+                <pre class="quantity_header_pre2">
+                    @_section_notes
+                </pre>
+                <div class="team_img">
+                    <img src="@_section_img_url" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#liAbout").addClass('active');
+    });
+</script>

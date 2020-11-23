@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Quantrix Application</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" href="images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/css_old/bootstrap.css" rel="stylesheet" />
+    <link href="~/css_old/mdb.css" rel="stylesheet" />
+    <link href="~/css_old/jquery.mCustomScrollbar.css" rel="stylesheet" />
+    <link href="~/css_old/style.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/mdb.js"></script>
+</head>
+<body>
+    <div class="mainc">
+        <header>
+            <div class="brand">
+                <a href="#">
+                    <img src="~/images/logo.jpg" />
+                </a>
+            </div>
+            <div class="top-nav">
+                <ul>
+                    <li id="username"><i class="fa fa-user-circle-o mr-1" aria-hidden="true"></i></li>
+                    <li>
+                        <div class="">
+                            <button class="btn btn-icon btn-transparent " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" id="logout" onclick="logout()">Logout</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <section class="left-part">
+            <div class="mCustomScrollbar content fluid light" data-mcs-theme="inset-2-dark">
+                @*</br>*@
+                <ul id="menuUL" onclick="menuClick()">
+                    <li id="liHomePageContact" onclick="AddHomePageContact()"><a href="#" class="waves-effect waves-light" id="AddHomePageContact" onclick="AddHomePageContact()"><span>Home Page Contact</span></a></li>
+                    <li id="liBanner" onclick="AddBanner()"><a href="#" class="waves-effect waves-light" id="AddBanner" onclick="AddBanner()"><span>Banner Management</span></a></li>
+                    <li id="liCategory" onclick="AddCategory()"><a href="#" class="waves-effect waves-light" id="AddCategory" onclick="AddCategory()"><span>Category Management</span></a></li>
+                    @*<li id="liProduct" onclick="AddProduct()"><a href="#" class="waves-effect waves-light" id="AddProduct" onclick="AddProduct()"><span>Product</span></a></li>*@
+                    <li id="liHomePageContent" onclick="AddHomePageContent()"><a href="#" class="waves-effect waves-light" id="AddHomePageContent" onclick="AddHomePageContent()"><span>Home Page Content</span></a></li>
+                    <li id="liHomePageFooter" onclick="AddHomePageFooter()"><a href="#" class="waves-effect waves-light" id="AddHomePageFooter" onclick="AddHomePageFooter()"><span>Home Page Testimonial</span></a></li>
+                    <li id="liAboutUs" onclick="AddAboutUs()"><a href="#" class="waves-effect waves-light" id="liAboutUs" onclick="AddAboutUs()"><span>About Us</span></a></li>
+
+                </ul>
+            </div>
+        </section>
+        <section class="right-part">
+            @RenderBody()
+            <div id="Siteroot"></div>
+        </section>
+    </div>
+        
+        <script>
+            $(document).ready(function () {
+                $('#username').html("<i class=\"fa fa-user-circle-o mr-1\" aria-hidden=\"true\"></i> Welcome " + '@Session["Name"].ToString()' + " ");
+                $(".content").mCustomScrollbar();
+                //$('[data-toggle="tooltip"]').tooltip();
+                //$('input#input_text, textarea#textarea1').characterCounter();
+            });
+
+            function logout() {
+                location.href = '/Admin/LogOut';
+            }
+
+            $('#menuUL li a').click(function (i, a) {
+                $('#menuUL li a').removeClass('menucolor');
+                $(this).attr('class', 'menucolor');
+            });
+
+            function AddBanner() {
+                location.href = '/Admin/BannerManagement';
+            }
+            function AddHomePageContact() {
+                location.href = '/Admin/HomePageContactManagement';
+            }
+            function AddHomePageFooter() {
+                location.href = '/Admin/HomePageFooterManagement';
+            }
+
+            function AddHomePageContent() {
+                location.href = '/Admin/HomePageContentManagement';
+            }
+            function AddCategory() {
+                location.href = '/Admin/CategoryManagement';
+            }
+            function AddProduct() {
+                location.href = '/Admin/ProductManagement';
+            }
+              function AddAboutUs() {
+                location.href = '/Admin/AboutUsManagement';
+            }
+            
+        </script>
+</body>
+</html>

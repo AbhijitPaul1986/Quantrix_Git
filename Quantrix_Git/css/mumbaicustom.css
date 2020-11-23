@@ -1,0 +1,204 @@
+/*General style */
+
+/*.container.main-box-faq {
+  max-width: 960px;
+}*/
+
+.main-box-faq .panel-default>.panel-heading {
+  color: #333;
+  background-color: #fff;
+  border-color: #e4e5e7;
+  padding: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.main-box-faq .panel-default{
+	background-color: #ffffff;
+	box-shadow: 0px 3px 18px 0 rgba(0, 0, 0, 0.14)
+}
+
+.main-box-faq .panel-body {
+    padding: 0 30px 30px 30px;
+    margin: 10px 0px;
+	border-radius: 5px;
+}
+
+.main-box-faq .panel-default>.panel-heading a {
+	display: block;
+	padding: 20px 30px;
+  font-size: 20px;
+	color: #000;
+	font-weight: 700;
+}
+
+.main-box-faq .panel-default>.panel-heading a:after {
+  content: "";
+  position: relative;
+  /*top: 1px;*/
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  float: right;
+  transition: transform .25s linear;
+  -webkit-transition: -webkit-transform .25s linear;
+}
+
+.main-box-faq .panel-default>.panel-heading a[aria-expanded="true"] {
+  background-color: #ffffff;
+}
+
+.main-box-faq .panel-default>.panel-heading a[aria-expanded="true"]:after {
+  content: "\2212";
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+  color: #cc3333;
+  font-size: 34px;
+}
+
+.main-box-faq .panel-default>.panel-heading a[aria-expanded="false"]:after {
+  content: "\002b";
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+  color: #cc3333;
+  font-size: 34px;
+}
+.redbutton:hover {
+    border: 3px solid #da242a;
+}
+.table .thead-dark th {
+    color: #fff;
+    background-color: #676767!important;
+    border-color: #676767!important;
+}
+.pricingtable{
+	border: 1px solid #676767;
+}
+.number-percentage{
+  padding-bottom: 30px;
+}
+.golfimgdiv p {
+    color: #fff;
+}
+@media screen and (max-width: 600px){
+.jumbotron button {
+    width: 170px;
+}
+}
+
+@media screen and (min-width: 768px){
+.border-right-only {
+    border-right: 1px solid #d9d9d9;
+}
+}
+
+.fittings-intro, .fittings-subintro{
+  padding: .75rem 1rem;
+}
+.fittings-intro h2 {
+  font-size: 24px;
+  color: #000000;
+  line-height: 48px;
+  font-family: 'gibsonsemibold';
+}
+.fittings-intro p {
+  font-size: 18px;
+}
+.fittings-subintro h2 {
+  font-size: 24px;
+  color: #000000;
+  line-height: 48px;
+  font-family: 'gibsonsemibold';
+}
+.fittings-subintro p {
+  font-size: 18px;
+  padding-top: 20px;
+}
+
+.fittings-subintro span {
+    color: #959595;
+    font-size: 18px;
+}
+
+.premium-heading{
+  text-align: center;
+  margin-bottom: 50px;
+}
+.premium-heading a{
+  text-align: center;
+  font-family: 'gibsonsemibold';
+  text-transform: uppercase;
+  background: #da2429;
+  color: #fff;
+  font-size: 18px;
+  margin: 0 auto;
+  padding: 10px 25px;
+  pointer-events: none;
+  border-radius: 20px;
+}
+.premium-heading-cont{
+  text-align: center;
+  margin: 30px 0px;
+}
+.premium-heading-cont a{
+  text-align: center;
+  font-family: 'gibsonsemibold';
+  text-transform: uppercase;
+  background: #da2429;
+  color: #fff;
+  font-size: 18px;
+  margin: 0 auto;
+  padding: 10px 25px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.item-names-prize a {
+    background: #178e56;
+    color: #ffffff;
+    padding: 5px 20px;
+    border-radius: 40px;
+    font-size: 18px;
+    font-weight: 600;
+}
+.temp-div{
+  float: right;
+  align-items: flex-end;
+}
+
+ul.check-box-list {
+    list-style: none;
+    margin-left: -40px;
+}
+
+.check-box-list li{
+  font-size: 16px;
+  padding: 10px 38px;
+  background: url(../images/checked.png) no-repeat;
+  background-position-x: 0%;
+  background-position-y: 0%;
+  background-position: 0px 11px;
+}
+
+.custom-card {
+    box-shadow: 0px 3px 27px 0 rgba(0, 0, 0, 0.14);
+    background-color: #fefefe;
+    padding: 30px;
+    flex: 1;
+    height: 100%;
+}
+
+.item-names-prize {
+    display: flex;
+    align-items: center;
+}
+.item-names-prize h4 {
+    width: 80%;
+    float: left;
+    padding-top: 10px;
+}

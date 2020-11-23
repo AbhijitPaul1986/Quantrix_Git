@@ -1,0 +1,93 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>QUANTRIX APPLICATION</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    @*<link rel="stylesheet" href="./css/frontEnd/css/styles.css">*@
+    <link href="~/css/frontEnd/css/styles.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+    <div class="main_container">
+        <div class="container-fluid p-0">
+            <header>
+                <div class="quantrix_info" style="display:none">
+                    <ul>
+                        <li><span class="icon-placeholder quantrix_info_li_span"></span><span id="spnAddress"></span></li>
+                        <li><span class="icon-envelope quantrix_info_li_span"></span><span id="spnemail"></span></li>
+                        <li><span class="icon-phone quantrix_info_li_span"></span><span id="spnPhone"></span></li>
+                    </ul>
+                </div>
+                <div class="quantrix_nav">
+                    <nav>
+                        <div class="logo">
+                            <a href="javascript:void(0)">
+                                <img src="~/images/frontEnd/images/logo.jpg" />
+                            </a>
+                        </div>
+                        <div class="nav_menu">
+                            <ul id="paginationUL">
+                                <li id="liHome"><a href="@Url.Action("Index", "Home")" class="nav-link">HOME</a></li>
+                                <li id="liAbout"><a href="@Url.Action("AboutUs", "Home")" class="nav-link">ABOUT US</a></li>
+                                <li id="liProduct"><a href="javascript:void(0)" class="nav-link">PRODUCTS</a></li>
+                                <li id="liContact"><a href="javascript:void(0)" class="nav-link">CONTACT US</a></li>
+                                <li id="liFAQ"><a href="javascript:void(0)" class="nav-link">FAQ</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </header>
+            <div class="back_to_top" style="display:none">
+                <span class="icon-up"></span>
+            </div>
+            @RenderBody()
+        </div>
+        <footer>
+            <div class="footer_main">
+                <p>© Copyright Quantrix Plastics 2020</p>
+            </div>
+        </footer>
+    </div>
+    <script src="~/Scripts/frontEnd/js/custom.js"></script>
+</body>
+</html>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#paginationUL > li').click(function () {            
+            $(this).addClass('active').siblings().removeClass('active');
+            //return false;
+        });
+
+        $(function () {
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('.back_to_top').fadeIn();
+            } else {
+                $('.back_to_top').fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        $('.back_to_top').click(function () {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+    });
+</script>
+
